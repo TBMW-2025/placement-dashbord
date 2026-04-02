@@ -8,13 +8,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const { data: { session }, error } = await window.apiService.getSession();
 
+        const hasBypass = localStorage.getItem('localBypass') === 'true';
+
         if (isPublicRoute) {
-            if (session) {
+            if (session || hasBypass) {
                 window.location.replace('dashboard.html');
             }
         } else {
             // Protected route
-            if (!session || error) {
+            if (!session && !hasBypass) {
                 window.location.replace('index.html');
             }
         }
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (logoutBtn) {
             logoutBtn.addEventListener('click', async (e) => {
                 e.preventDefault();
+                localStorage.removeItem('localBypass'); // Clear bypass offline mode
                 await window.apiService.logout();
                 window.location.replace('index.html');
             });
