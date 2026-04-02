@@ -38,6 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // 1b. Handle Demo Button (index.html)
+    const demoBtn = document.getElementById('demoBtn');
+    if (demoBtn) {
+        demoBtn.addEventListener('click', () => {
+            localStorage.setItem('localBypass', 'true');
+            window.location.href = 'dashboard.html';
+        });
+    }
+
     // 2. Handle Password Reset Form (forgot-password.html)
     const resetForm = document.getElementById('resetForm');
     if (resetForm) {
