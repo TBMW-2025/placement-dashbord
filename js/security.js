@@ -6,7 +6,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const isPublicRoute = path.endsWith('index.html') || path.endsWith('forgot-password.html') || path === '/' || path.endsWith('/');
     
     try {
-        const { data: { session }, error } = await window.apiService.getSession();
+        const response = await window.apiService.getSession();
+        const session = response?.data?.session || null;
+        const error = response?.error;
 
         const hasBypass = localStorage.getItem('localBypass') === 'true';
 
@@ -33,12 +35,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     } catch (err) {
         console.error("Security Route Check Error:", err);
-        if (!isPublicRoute) window.location.replace('index.html');
+        const hasBypass = localStorage.getItem('localBypass') === 'true';
+        if (!isPublicRoute && !hasBypass) window.location.replace('index.html');
     }
 
     // 3. Listen for session drops mid-use (e.g. token expiration)
     window.apiService.supabase.auth.onAuthStateChange((event, session) => {
-        if (event === 'SIGNED_OUT' && !isPublicRoute) {
+        const hasBypass = localStorage.getItem('localBypass') === 'true';
+        if (event === 'SIGNED_OUT' && !isPublicRoute && !hasBypass) {
             window.location.replace('index.html');
         } else if (event === 'SIGNED_IN' && isPublicRoute) {
             window.location.replace('dashboard.html');
