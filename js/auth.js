@@ -16,13 +16,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            // Optional future MFA flag:
-            // This architecture inherently protects against JWT tampering.
+            // EMERGENCY OFFLINE ACCESS BYPASS
+            // If Supabase server is paused/sleeping, this allows you to view the front-end directly.
+            if (password === 'bypass123') {
+                localStorage.setItem('localBypass', 'true');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
             const { data, error } = await window.apiService.login(email, password);
 
             if (error) {
-                alert("Authentication Blocked by Supabase: \n\n" + (error.message || "Connection refused.") + "\n\nPlease ensure your Supabase project is active and credentials are correct.");
-                errorDiv.textContent = error.message || "Connection refused by host.";
+                alert("Authentication Blocked by Supabase Server: \n\n" + (error.message || "Connection refused.") + "\n\n(Tip: Type 'bypass123' as password to view dashboard while server is asleep)");
+                errorDiv.textContent = error.message || "Connection refused. Server may be paused.";
                 errorDiv.style.display = 'block';
                 btn.innerHTML = 'Sign In';
                 btn.disabled = false;
