@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.apiService.supabase.auth.onAuthStateChange((event, session) => {
         if (event === 'SIGNED_OUT' && !isPublicRoute) {
             window.location.replace('index.html');
+        } else if (event === 'SIGNED_IN' && isPublicRoute) {
+            window.location.replace('dashboard.html');
         }
     });
 });
