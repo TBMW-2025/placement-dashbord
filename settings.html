@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Placement Monitor</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>📊 Placement Monitor</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">🏠 Dashboard</a></li>
+            <li><a href="students.html">🎓 Students</a></li>
+            <li><a href="companies.html">🏢 Companies</a></li>
+            <li><a href="internships.html">💼 Internships</a></li>
+            <li><a href="placements.html">🚀 Placements</a></li>
+            <li><a href="reports.html">📈 Reports</a></li>
+            <li><a href="settings.html" class="active">⚙️ Settings</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="topvar">
+            <div class="topvar-search">
+            </div>
+            <div class="topvar-actions">
+                <div class="user-profile">
+                    <div class="avatar">A</div>
+                    <span style="font-weight: 500;">Admin User</span>
+                </div>
+                <button class="btn btn-secondary" id="logoutBtn">Logout</button>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-header">
+                <h1>Settings</h1>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+                <div class="kpi-card" style="align-items: center; text-align: center; background: var(--bg-secondary)">
+                    <div class="avatar" style="width: 80px; height: 80px; font-size: 2rem; margin-bottom: 1rem;">A</div>
+                    <h3 id="adminEmail" style="color: var(--text-primary); font-size: 1.2rem; margin-bottom: 0.5rem;">admin@example.com</h3>
+                    <span class="badge" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue);">Administrator</span>
+                </div>
+
+                <div class="table-container" style="padding: 2rem; margin-top: 0;">
+                    <h3 style="margin-bottom: 1.5rem;">Security</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Change your Supabase admin password using the panel below. This utilizes Supabase's authentication API.</p>
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" id="newPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="changePwdBtn">Update Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/supabaseClient.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Placement Monitor</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>📊 Placement Monitor</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="active">🏠 Dashboard</a></li>
+            <li><a href="students.html">🎓 Students</a></li>
+            <li><a href="companies.html">🏢 Companies</a></li>
+            <li><a href="internships.html">💼 Internships</a></li>
+            <li><a href="placements.html">🚀 Placements</a></li>
+            <li><a href="reports.html">📈 Reports</a></li>
+            <li><a href="settings.html">⚙️ Settings</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navbar -->
+        <header class="topvar">
+            <div class="topvar-search">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="topvar-actions">
+                <div class="user-profile">
+                    <div class="avatar">A</div>
+                    <span style="font-weight: 500;">Admin User</span>
+                </div>
+                <button class="btn btn-secondary" id="logoutBtn">Logout</button>
+            </div>
+        </header>
+
+        <!-- Page Container -->
+        <div class="page-container">
+            <div class="page-header">
+                <h1>Dashboard Overview</h1>
+                <button class="btn btn-primary" onclick="window.location.href='students.html'">+ Add Student</button>
+            </div>
+
+            <!-- KPIs -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <h3>Total Students</h3>
+                    <div class="value" id="kpi-students"><span class="spinner"></span></div>
+                </div>
+                <div class="kpi-card">
+                    <h3>Total Placed</h3>
+                    <div class="value" id="kpi-placed"><span class="spinner"></span></div>
+                </div>
+                <div class="kpi-card">
+                    <h3>Companies Visited</h3>
+                    <div class="value" id="kpi-companies"><span class="spinner"></span></div>
+                </div>
+                <div class="kpi-card">
+                    <h3>Total Internships</h3>
+                    <div class="value" id="kpi-internships"><span class="spinner"></span></div>
+                </div>
+            </div>
+
+            <!-- Charts Area -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem;">Placement Trend (Yearly)</h3>
+                    <canvas id="trendChart" height="250"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem;">Status Distribution</h3>
+                    <canvas id="statusChart" height="250"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Placements -->
+            <div>
+                <h3>Recent Placements</h3>
+                <div class="table-container">
+                    <table id="recentPlacementsTable">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Company</th>
+                                <th>Role</th>
+                                <th>Package (LPA)</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentPlacementsBody">
+                            <tr><td colspan="5" class="table-loading"><span class="spinner"></span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/supabaseClient.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

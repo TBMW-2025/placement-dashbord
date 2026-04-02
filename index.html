@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Placement Monitor</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="auth-split-layout">
+        <!-- Left Branding Panel -->
+        <div class="auth-branding">
+            <h1>Placement Monitor</h1>
+            <p>A secure, unified platform administering university student placements, internships, and dynamic recruiting metrics.</p>
+        </div>
+
+        <!-- Right Authentication Panel -->
+        <div class="auth-panel">
+            <div class="auth-panel-card">
+                <h2>Welcome back</h2>
+                <p>Please enter your credentials to securely sign into your dashboard.</p>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required autocomplete="email" placeholder="admin@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required autocomplete="current-password" placeholder="••••••••">
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+                        <a href="forgot-password.html" style="color: var(--accent-blue); font-size: 0.875rem; text-decoration: none;">Forgot password?</a>
+                    </div>
+                    <div id="authError" style="color: var(--accent-red); margin-bottom: 1rem; font-size: 0.875rem; display: none; background: rgba(239,68,68,0.1); padding: 0.5rem; border-radius: 0.25rem;"></div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" id="loginBtn">
+                        Sign In
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/supabaseClient.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

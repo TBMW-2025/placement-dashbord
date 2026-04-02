@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Placement Monitor</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>📊 Placement Monitor</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">🏠 Dashboard</a></li>
+            <li><a href="students.html">🎓 Students</a></li>
+            <li><a href="companies.html">🏢 Companies</a></li>
+            <li><a href="internships.html">💼 Internships</a></li>
+            <li><a href="placements.html">🚀 Placements</a></li>
+            <li><a href="reports.html" class="active">📈 Reports</a></li>
+            <li><a href="settings.html">⚙️ Settings</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <header class="topvar">
+            <div class="topvar-search">
+            </div>
+            <div class="topvar-actions">
+                <div class="user-profile">
+                    <div class="avatar">A</div>
+                    <span style="font-weight: 500;">Admin User</span>
+                </div>
+                <button class="btn btn-secondary" id="logoutBtn">Logout</button>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <div class="page-header">
+                <h1>Analytics & Reports</h1>
+            </div>
+
+            <div class="charts-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem;">Salary Distribution</h3>
+                    <canvas id="salaryChart" height="250"></canvas>
+                </div>
+                <div class="chart-container">
+                    <h3 style="margin-bottom: 1rem;">Programme-wise Placements</h3>
+                    <canvas id="programmeChart" height="250"></canvas>
+                </div>
+            </div>
+
+            <div class="kpi-grid" style="margin-top: 2rem;">
+                <div class="kpi-card" style="background: var(--bg-secondary)">
+                    <h3>Placement Rate</h3>
+                    <div class="value" id="placementRate"><span class="spinner"></span></div>
+                </div>
+                <div class="kpi-card" style="background: var(--bg-secondary)">
+                    <h3>Average Salary</h3>
+                    <div class="value" id="avgSalary"><span class="spinner"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/supabaseClient.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/reports.js"></script>
+</body>
+</html>
