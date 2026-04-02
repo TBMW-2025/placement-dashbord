@@ -21,12 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const { data, error } = await window.apiService.login(email, password);
 
             if (error) {
-                errorDiv.textContent = error.message;
+                alert("Authentication Blocked by Supabase: \n\n" + (error.message || "Connection refused.") + "\n\nPlease ensure your Supabase project is active and credentials are correct.");
+                errorDiv.textContent = error.message || "Connection refused by host.";
                 errorDiv.style.display = 'block';
                 btn.innerHTML = 'Sign In';
                 btn.disabled = false;
             } else {
-                window.location.replace('dashboard.html');
+                window.location.href = 'dashboard.html';
             }
         });
     }
