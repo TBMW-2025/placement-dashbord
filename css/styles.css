@@ -2,17 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-glass: rgba(30, 41, 59, 0.7);
-    --text-primary: #f8fafc;
+    --bg-primary: #000000;
+    --bg-secondary: #0f172a;
+    --bg-glass: rgba(15, 23, 42, 0.9);
+    --text-primary: #ffffff;
     --text-secondary: #94a3b8;
     --accent-blue: #3b82f6;
     --accent-purple: #8b5cf6;
     --accent-green: #10b981;
     --accent-red: #ef4444;
     --border-color: rgba(255, 255, 255, 0.1);
-    --gradient-card: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    --gradient-card: linear-gradient(135deg, rgba(30, 41, 59, 1) 0%, rgba(15, 23, 42, 1) 100%);
     --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
 }
 
@@ -122,8 +122,8 @@ body {
 
 /* Main Layout */
 .sidebar {
-    width: 260px;
-    background: var(--bg-secondary);
+    width: 100px;
+    background: #09090b;
     border-right: 1px solid var(--border-color);
     height: 100vh;
     position: fixed;
@@ -133,53 +133,59 @@ body {
     flex-direction: column;
     padding: 1.5rem 0;
     z-index: 100;
-}
-
-.sidebar-header {
-    padding: 0 1.5rem 2rem;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 1rem;
-}
-
-.sidebar-header h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--accent-blue);
-    display: flex;
     align-items: center;
-    gap: 0.5rem;
+}
+
+.sidebar-logo {
+    margin-bottom: 2rem;
+    width: 50px;
 }
 
 .nav-links {
     list-style: none;
     flex-grow: 1;
+    width: 100%;
 }
 
 .nav-links li {
-    margin-bottom: 0.5rem;
-    padding: 0 1rem;
+    margin-bottom: 0.25rem;
+    padding: 0 0.5rem;
+    width: 100%;
 }
 
 .nav-links a {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1rem;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.75rem 0;
     color: var(--text-secondary);
     text-decoration: none;
     border-radius: 0.5rem;
     transition: all 0.2s ease;
-    font-weight: 500;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.nav-links img.icon {
+    width: 20px;
+    opacity: 0.6;
 }
 
 .nav-links a:hover, .nav-links a.active {
-    background: var(--gradient-card);
+    background: #18181b;
     color: var(--text-primary);
-    border: 1px solid var(--border-color);
+    border: 1px solid #27272a;
+}
+
+.nav-links a:hover img.icon, .nav-links a.active img.icon {
+    opacity: 1;
 }
 
 .main-content {
-    margin-left: 260px;
+    margin-left: 100px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -187,9 +193,8 @@ body {
 }
 
 .topvar {
-    height: 70px;
-    background: var(--bg-glass);
-    backdrop-filter: blur(10px);
+    height: 100px;
+    background: var(--bg-primary);
     border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
@@ -198,6 +203,27 @@ body {
     position: sticky;
     top: 0;
     z-index: 50;
+}
+
+.topvar-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.topvar-brand img {
+    height: 50px;
+}
+
+.topvar-brand-titles h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.topvar-brand-titles p {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
 }
 
 .topvar-search input {
@@ -253,44 +279,65 @@ body {
 }
 
 .page-header h1 {
-    font-size: 1.75rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 /* KPI Cards */
 .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
     margin-bottom: 2rem;
 }
 
 .kpi-card {
-    background: var(--gradient-card);
+    background: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 1rem;
-    padding: 1.5rem;
+    border-radius: 0.5rem;
+    padding: 1.25rem 1rem;
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
 }
 
 .kpi-card:hover {
-    transform: translateY(-5px);
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.kpi-icon {
+    font-size: 1.8rem;
+    width: 40px;
+    text-align: center;
+}
+
+.kpi-content {
+    display: flex;
+    flex-direction: column;
 }
 
 .kpi-card h3 {
     color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .kpi-card .value {
-    font-size: 2rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-primary);
+    margin-top: 0.2rem;
+}
+
+.kpi-indicator {
+    width: 30px;
+    height: 4px;
+    background: white;
+    margin-top: 0.3rem;
+    border-radius: 2px;
 }
 
 /* Charts */
@@ -324,17 +371,25 @@ table {
 }
 
 th, td {
-    padding: 1rem 1.5rem;
+    padding: 0.875rem 1rem;
     border-bottom: 1px solid var(--border-color);
+    font-size: 0.875rem;
 }
 
 th {
     font-weight: 600;
-    color: var(--text-secondary);
+    color: white;
+    background: var(--accent-purple);
     text-transform: uppercase;
-    font-size: 0.75rem;
+    font-size: 0.70rem;
     letter-spacing: 0.05em;
-    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+th span.sort-arrow {
+    font-size: 0.6rem;
+    margin-left: 0.25rem;
+    color: rgba(255,255,255,0.7);
 }
 
 tr:hover td {
@@ -492,4 +547,41 @@ tr:hover td {
     display: flex;
     justify-content: center;
     padding: 3rem;
+}
+
+/* Footer Frame */
+.main-footer {
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2rem;
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+    background: #000000;
+}
+
+.footer-section h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.footer-section p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a:hover {
+    color: var(--accent-blue);
 }
