@@ -53,33 +53,25 @@ function renderTable(data) {
 }
 
 function handleSearch(e) {
-    const q = e.target.value.toLowerCase();
-    const filtered = allCompanies.filter(c => c.company_name.toLowerCase().includes(q));
-    renderTable(filtered);
+        fieldVisitsBody.appendChild(tr);
+    });
 }
 
-function openAddModal() {
-    document.getElementById('modalTitle').textContent = 'Add Company';
-    document.getElementById('companyForm').reset();
-    document.getElementById('companyId').value = '';
-    document.getElementById('companyModal').classList.add('active');
-}
-
-function editCompany(company) {
-    document.getElementById('modalTitle').textContent = 'Edit Company';
-    document.getElementById('companyId').value = company.id;
-    document.getElementById('company_name').value = company.company_name;
-    document.getElementById('role_offered').value = company.role_offered || '';
-    document.getElementById('contact_person').value = company.contact_person || '';
-    document.getElementById('contact_email').value = company.contact_email || '';
-    document.getElementById('companyModal').classList.add('active');
+function openModal(visit = null) {
+    document.getElementById('modalTitle').textContent = visit ? 'Edit Field Visit' : 'Add Field Visit';
+    document.getElementById('visitId').value = visit ? visit.id : '';
+    document.getElementById('location').value = visit ? visit.location : '';
+    document.getElementById('visit_date').value = visit ? visit.visit_date : '';
+    document.getElementById('purpose').value = visit ? visit.purpose : '';
+    document.getElementById('participants').value = visit ? visit.participants : '';
+    visitModal.classList.add('active');
 }
 
 function closeModal() {
-    document.getElementById('companyModal').classList.remove('active');
+    visitModal.classList.remove('active');
 }
 
-async function handleSaveCompany(e) {
+async function handleFormSubmit(e) {
     e.preventDefault();
     const btn = document.getElementById('saveBtn');
     const originalText = btn.textContent;
