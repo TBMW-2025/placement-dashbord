@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Companies - Placement Monitor</title>
+    <title>Field Visits - Placement Monitor</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -27,8 +27,8 @@
                 </a>
             </li>
             <li>
-                <a href="companies.html" class="active">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2635/2635467.png" class="icon" alt="Companies" style="filter: invert(1);">
+                <a href="companies.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2635/2635467.png" class="icon" alt="Companies">
                     Companies
                 </a>
             </li>
@@ -39,8 +39,8 @@
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" class="icon" alt="Field Visits" style="filter: invert(1);">
+                <a href="field_visits.html" class="active">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" class="icon" alt="Field Visits">
                     Field Visits
                 </a>
             </li>
@@ -98,10 +98,10 @@
         <!-- Page Container -->
         <div class="page-container">
             <div class="page-header" style="margin-bottom: 1rem;">
-                <h1 id="pageTitle">Companies List</h1>
+                <h1 id="pageTitle">Field Visits</h1>
                 <div style="display: flex; gap: 1rem;">
                     <div class="topvar-search" style="margin-right: -0.5rem;">
-                        <input type="text" id="searchInput" placeholder="Search companies..." style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); width: 200px; padding: 0.5rem 1rem; border-radius: 0.5rem;">
+                        <input type="text" id="searchInput" placeholder="Search field visits..." style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); width: 200px; padding: 0.5rem 1rem; border-radius: 0.5rem;">
                     </div>
                     
                     <button class="btn" style="background: transparent; border: 1px solid var(--accent-green); color: var(--accent-green);">
@@ -113,24 +113,24 @@
                     </button>
                     
                     <button class="btn" style="background: #f97316; color: white; border: none;" id="openAddModalBtn">
-                        + Add Company
+                        + Add Visit
                     </button>
                 </div>
             </div>
 
             <div class="table-container" style="border-radius: 0.5rem; margin-top: 0;">
-                <table id="companiesTable">
+                <table id="fieldVisitsTable">
                     <thead>
                         <tr>
                             <th>SR. NO.</th>
-                            <th>COMPANY NAME<span class="sort-arrow">▼</span></th>
-                            <th>ROLE<span class="sort-arrow">▼</span></th>
-                            <th>CONTACT PERSON<span class="sort-arrow">▼</span></th>
-                            <th>CONTACT<span class="sort-arrow">▼</span></th>
+                            <th>LOCATION<span class="sort-arrow">▼</span></th>
+                            <th>DATE<span class="sort-arrow">▼</span></th>
+                            <th>PURPOSE<span class="sort-arrow">▼</span></th>
+                            <th>PARTICIPANTS<span class="sort-arrow">▼</span></th>
                             <th>ACTIONS</th>
                         </tr>
                     </thead>
-                    <tbody id="companiesBody">
+                    <tbody id="fieldVisitsBody">
                         <tr><td colspan="5" class="table-loading"><span class="spinner"></span></td></tr>
                     </tbody>
                 </table>
@@ -160,37 +160,37 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal" id="companyModal">
+    <div class="modal" id="visitModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">Add Company</h3>
+                <h3 id="modalTitle">Add Visit</h3>
                 <button class="close-btn" id="closeModalBtn">&times;</button>
             </div>
-            <form id="companyForm">
-                <input type="hidden" id="companyId">
+            <form id="visitForm">
+                <input type="hidden" id="visitId">
                 <div class="form-group">
-                    <label>Company Name</label>
-                    <input type="text" id="company_name" required>
+                    <label>Location</label>
+                    <input type="text" id="location" required>
                 </div>
                 <div class="form-group">
-                    <label>Role Offered</label>
-                    <input type="text" id="role_offered">
+                    <label>Date</label>
+                    <input type="date" id="visit_date">
                 </div>
                 <div class="form-group">
-                    <label>Contact Person</label>
-                    <input type="text" id="contact_person">
+                    <label>Purpose</label>
+                    <input type="text" id="purpose">
                 </div>
                 <div class="form-group">
-                    <label>Contact Email</label>
-                    <input type="email" id="contact_email">
+                    <label>Participants</label>
+                    <input type="number" id="participants">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;" id="saveBtn">Save Company</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%;" id="saveBtn">Save Visit</button>
             </form>
         </div>
     </div>
 
     <script src="js/supabaseClient.js"></script>
     <script src="js/security.js"></script>
-    <script src="js/companies.js"></script>
+    <script src="js/field_visits.js"></script>
 </body>
 </html>
