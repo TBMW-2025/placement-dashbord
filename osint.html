@@ -7,6 +7,7 @@
     <title>Field Visits - Placement Monitor</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 </head>
 
 <body>
@@ -117,12 +118,9 @@
             <div class="page-header" style="margin-bottom: 1rem;">
                 <h1 id="pageTitle">Field Visits</h1>
                 <div style="display: flex; gap: 1rem;">
-                    <div class="topvar-search" style="margin-right: -0.5rem;">
-                        <input type="text" id="searchInput" placeholder="Search field visits..."
-                            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); width: 200px; padding: 0.5rem 1rem; border-radius: 0.5rem;">
-                    </div>
-
-                    <button class="btn"
+                    <button class="btn btn-secondary" id="openExcelModalBtn">📤 Import Excel</button>
+                    <button class="btn btn-secondary" id="exportExcelBtn">⬇️ Export to Excel</button>
+                    <button class="btn" 
                         style="background: transparent; border: 1px solid var(--accent-green); color: var(--accent-green);">
                         📄 Import Excel
                     </button>
@@ -207,6 +205,27 @@
                     <input type="number" id="participants">
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;" id="saveBtn">Save Visit</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <!-- Excel Import Modal -->
+    <div class="modal" id="excelModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Import Osint (Excel)</h3>
+                <button class="close-btn" id="closeExcelModalBtn">&times;</button>
+            </div>
+            <form id="excelForm">
+                <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.875rem;">
+                    Upload an .xlsx file. The parser expects strict columns: <br/><b>title, company, location, source, url</b>.
+                </p>
+                <div class="form-group">
+                    <label>Upload .xlsx file</label>
+                    <input type="file" id="excel_file" accept=".xlsx,.xls" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;" id="uploadExcelBtn">Parse and Import</button>
             </form>
         </div>
     </div>
