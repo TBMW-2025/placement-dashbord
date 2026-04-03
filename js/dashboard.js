@@ -35,26 +35,26 @@ async function loadDashboardData() {
         // Populate Recent Placements Table (using mapped data)
         const tbody = document.getElementById('recentPlacementsBody');
         tbody.innerHTML = '';
-        
         if (mappedPlacements && mappedPlacements.length > 0) {
             // Show only top 5 recent
             const recent = mappedPlacements.slice(0, 5);
-            recent.forEach(p => {
+            recent.forEach((p, i) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
+                    <td style="color: var(--text-secondary);">${i + 1}</td>
                     <td>
-                        <div style="font-weight:500">${p.students?.student_name || 'N/A'}</div>
-                        <div style="font-size:0.75rem; color:var(--text-secondary)">${p.students?.enrollment_number || ''}</div>
+                        <div style="font-weight:500; color: white;">${p.students?.student_name || 'N/A'}</div>
+                        <div style="font-size:0.70rem; color:var(--text-secondary)">${p.students?.enrollment_number || ''}</div>
                     </td>
-                    <td>${p.companies?.company_name || 'N/A'}</td>
-                    <td>${p.role || '-'}</td>
-                    <td>${p.salary ? '₹' + p.salary + ' LPA' : '-'}</td>
-                    <td>${p.placement_date ? new Date(p.placement_date).toLocaleDateString() : '-'}</td>
+                    <td style="color: var(--text-secondary);">${p.companies?.company_name || 'N/A'}</td>
+                    <td style="color: var(--text-secondary);">${p.role || '-'}</td>
+                    <td style="color: var(--text-secondary);">${p.placement_date ? new Date(p.placement_date).toLocaleDateString() : '-'}</td>
+                    <td style="color: var(--text-secondary);">${p.salary ? '₹' + p.salary + ' LPA' : '-'}</td>
                 `;
                 tbody.appendChild(tr);
             });
         } else {
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:2rem;">No recent placements found.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:2rem; color: var(--text-secondary);">No recent placements found.</td></tr>';
         }
 
         // Setup Charts
