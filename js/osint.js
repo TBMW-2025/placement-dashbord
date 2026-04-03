@@ -160,3 +160,15 @@ async function deleteVisit(id) {
         alert('Failed to delete field visit.');
     }
 }
+
+async function handleExcelUpload(e) {
+    e.preventDefault();
+    alert("OSINT Database schema is not yet deployed. Import will be available soon!");
+    const btn = document.getElementById('uploadExcelBtn');
+    btn.innerHTML = 'Parse and Import';
+    btn.disabled = false;
+}
+
+function handleExportExcel() {
+    alert("OSINT Database schema is not yet deployed. Export will be available soon!");
+}

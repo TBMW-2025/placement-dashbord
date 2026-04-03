@@ -160,3 +160,76 @@ async function deleteVisit(id) {
         alert('Failed to delete field visit.');
     }
 }
+
+async function handleExcelUpload(e) {
+    e.preventDefault();
+    const btn = document.getElementById('uploadExcelBtn');
+    const originalText = btn.textContent;
+    btn.innerHTML = '<span class="spinner"></span> Parsing...';
+    btn.disabled = true;
+
+    const fileInput = document.getElementById('excel_file');
+    if (fileInput.files.length === 0) return;
+
+    try {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = async (e) => {
+            try {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+                const formattedPayload = jsonData.map(row => ({
+                    location: row.location || row.Location || 'Unknown',
+                    visit_date: row.visit_date || row.Date || null,
+                    purpose: row.purpose || row.Purpose || null,
+                    participants: row.participants ? parseInt(row.participants) : 0
+                }));
+
+                const { error } = await supabase.from('field_visits').insert(formattedPayload);
+                if (error) throw error;
+
+                alert("Field visits successfully imported!");
+                document.getElementById('excelModal').classList.remove('active');
+                fetchFieldVisits();
+            } catch (err) {
+                alert("Processing Error: " + err.message);
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    } catch (err) {
+        alert("Upload Error: " + err.message);
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }
+}
+
+function handleExportExcel() {
+    if (fieldVisitsData.length === 0) {
+        alert("No field visits to export!");
+        return;
+    }
+    
+    const exportData = fieldVisitsData.map(v => {
+        const dateStr = v.visit_date ? new Date(v.visit_date).toLocaleDateString() : '-';
+        return {
+            "Location": v.location || '',
+            "Date": dateStr,
+            "Purpose": v.purpose || '',
+            "Participants": v.participants || 0
+        };
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Field Visits");
+    
+    const timestamp = new Date().toISOString().split('T')[0];
+    XLSX.writeFile(workbook, `FieldVisits_Export_${timestamp}.xlsx`);
+}

@@ -9,6 +9,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('closeModalBtn').addEventListener('click', closeModal);
     document.getElementById('companyForm').addEventListener('submit', handleSaveCompany);
     document.getElementById('searchInput').addEventListener('input', handleSearch);
+    // Excel Events
+    document.getElementById('openExcelModalBtn').addEventListener('click', () => {
+        document.getElementById('excelForm').reset();
+        document.getElementById('excelModal').classList.add('active');
+    });
+    document.getElementById('closeExcelModalBtn').addEventListener('click', () => {
+        document.getElementById('excelModal').classList.remove('active');
+    });
+    document.getElementById('excelForm').addEventListener('submit', handleExcelUpload);
+    document.getElementById('exportExcelBtn').addEventListener('click', handleExportExcel);
+
 });
 
 async function loadCompanies() {
