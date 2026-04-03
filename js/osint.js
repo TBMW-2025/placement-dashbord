@@ -4,6 +4,11 @@ const visitModal = document.getElementById('visitModal');
 const openAddModalBtn = document.getElementById('openAddModalBtn');
 const closeModalBtn = document.getElementById('closeModalBtn');
 const visitForm = document.getElementById('visitForm');
+const openExcelModalBtn = document.getElementById('openExcelModalBtn');
+const closeExcelModalBtn = document.getElementById('closeExcelModalBtn');
+const excelModal = document.getElementById('excelModal');
+const excelForm = document.getElementById('excelForm');
+const exportExcelBtn = document.getElementById('exportExcelBtn');
 let fieldVisitsData = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,6 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if(openAddModalBtn) openAddModalBtn.addEventListener('click', () => openModal());
     if(closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
     if(visitForm) visitForm.addEventListener('submit', handleFormSubmit);
+
+    if(openExcelModalBtn) openExcelModalBtn.addEventListener('click', () => {
+        if(excelForm) excelForm.reset();
+        if(excelModal) excelModal.classList.add('active');
+    });
+    if(closeExcelModalBtn) closeExcelModalBtn.addEventListener('click', () => {
+        if(excelModal) excelModal.classList.remove('active');
+    });
+    if(excelForm) excelForm.addEventListener('submit', handleExcelUpload);
+    if(exportExcelBtn) exportExcelBtn.addEventListener('click', handleExportExcel);
 });
 
 async function fetchFieldVisits() {
@@ -159,4 +174,16 @@ async function deleteVisit(id) {
         console.error('Error deleting visit:', error);
         alert('Failed to delete field visit.');
     }
+}
+
+async function handleExcelUpload(e) {
+    e.preventDefault();
+    alert("OSINT Database schema is not yet deployed. Import will be available soon!");
+    const btn = document.getElementById('uploadExcelBtn');
+    btn.innerHTML = 'Parse and Import';
+    btn.disabled = false;
+}
+
+function handleExportExcel() {
+    alert("OSINT Database schema is not yet deployed. Export will be available soon!");
 }
