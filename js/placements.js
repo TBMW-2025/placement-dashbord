@@ -12,17 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('closeModalBtn').addEventListener('click', closeModal);
     document.getElementById('placementForm').addEventListener('submit', handleSavePlacement);
     document.getElementById('searchInput').addEventListener('input', handleSearch);
-
-    // Excel Events
-    document.getElementById('openExcelModalBtn').addEventListener('click', () => {
-        document.getElementById('excelForm').reset();
-        document.getElementById('excelModal').classList.add('active');
-    });
-    document.getElementById('closeExcelModalBtn').addEventListener('click', () => {
-        document.getElementById('excelModal').classList.remove('active');
-    });
-    document.getElementById('excelForm').addEventListener('submit', handleExcelUpload);
-    document.getElementById('exportExcelBtn').addEventListener('click', handleExportExcel);
 });
 
 async function loadPlacements() {
@@ -30,7 +19,7 @@ async function loadPlacements() {
     try {
         const { data, error } = await window.apiService.fetchPlacements();
         if (error) throw error;
-        
+
         allPlacements = data || [];
         renderTable(allPlacements);
     } catch (err) {
@@ -74,8 +63,8 @@ function renderTable(data) {
     }
 
     data.forEach(item => {
-        const statusBadge = item.status === 'Placed' 
-            ? '<span class="badge placed">Placed</span>' 
+        const statusBadge = item.status === 'Placed'
+            ? '<span class="badge placed">Placed</span>'
             : '<span class="badge not-placed">Not Placed</span>';
 
         // Fix missing column by fetching from the joined table (students, companies)
@@ -106,8 +95,8 @@ function renderTable(data) {
 
 function handleSearch(e) {
     const q = e.target.value.toLowerCase();
-    const filtered = allPlacements.filter(p => 
-        (p.students?.student_name?.toLowerCase().includes(q)) || 
+    const filtered = allPlacements.filter(p =>
+        (p.students?.student_name?.toLowerCase().includes(q)) ||
         (p.companies?.company_name?.toLowerCase().includes(q))
     );
     renderTable(filtered);
@@ -145,7 +134,7 @@ async function handleSavePlacement(e) {
 
     const id = document.getElementById('placementId').value;
     const sValue = document.getElementById('salary').value;
-    
+
     const payload = {
         student_id: document.getElementById('student_id').value,
         company_id: document.getElementById('company_id').value,
@@ -184,112 +173,4 @@ async function deletePlacement(id) {
             alert("Error deleting: " + err.message);
         }
     }
-}
-
-async function handleExcelUpload(e) {
-    e.preventDefault();
-    const btn = document.getElementById('uploadExcelBtn');
-    const originalText = btn.textContent;
-    btn.innerHTML = '<span class="spinner"></span> Parsing...';
-    btn.disabled = true;
-
-    const fileInput = document.getElementById('excel_file');
-    if (fileInput.files.length === 0) return;
-
-    try {
-        const [{ data: dbStudents }, { data: dbCompanies }] = await Promise.all([
-            window.apiService.fetchAll('students'),
-            window.apiService.fetchAll('companies')
-        ]);
-
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        
-        reader.onload = async (e) => {
-            try {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-                const jsonData = XLSX.utils.sheet_to_json(worksheet);
-
-                let skipped = 0;
-                const formattedPayload = [];
-
-                for (const row of jsonData) {
-                    const sName = String(row.student_name || row.Student || '').toLowerCase().trim();
-                    const sEnroll = String(row.enrollment_number || row.Enrollment || '').trim();
-                    const student = dbStudents.find(s => 
-                        (s.student_name.toLowerCase().trim() === sName && sName !== '') || 
-                        (s.enrollment_number === sEnroll && sEnroll !== '')
-                    );
-
-                    const cName = String(row.company_name || row.Company || '').toLowerCase().trim();
-                    const company = dbCompanies.find(c => c.company_name.toLowerCase().trim() === cName && cName !== '');
-
-                    if (!student || !company) {
-                        skipped++;
-                        continue;
-                    }
-
-                    formattedPayload.push({
-                        student_id: student.id,
-                        company_id: company.id,
-                        role: row.role || row.Role || null,
-                        salary: row.salary ? parseFloat(row.salary) : null,
-                        placement_date: row.placement_date || null,
-                        status: row.status || row.Status || 'Placed'
-                    });
-                }
-
-                if (formattedPayload.length === 0) {
-                    alert(`No valid rows mapped! Skipped ${skipped} rows due to unmatched Student Name/Enrollment or Company Name.`);
-                    return;
-                }
-
-                const { error } = await window.apiService.supabase.from('placements').insert(formattedPayload);
-                if (error) throw error;
-
-                alert(`Successfully imported ${formattedPayload.length} placements. Skipped ${skipped} unmapped rows.`);
-                document.getElementById('excelModal').classList.remove('active');
-                await loadPlacements();
-            } catch (err) {
-                alert("Processing Error: " + err.message);
-            } finally {
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }
-        };
-        reader.readAsArrayBuffer(file);
-    } catch (err) {
-        alert("Upload Error: " + err.message);
-        btn.textContent = originalText;
-        btn.disabled = false;
-    }
-}
-
-function handleExportExcel() {
-    if (allPlacements.length === 0) {
-        alert("No placements to export!");
-        return;
-    }
-    
-    const exportData = allPlacements.map(p => {
-        const dateStr = p.placement_date ? new Date(p.placement_date).toLocaleDateString() : '-';
-        return {
-            "Student Name": p.students?.student_name || 'N/A',
-            "Enrollment Number": p.students?.enrollment_number || '',
-            "Company Name": p.companies?.company_name || 'N/A',
-            "Role": p.role || '-',
-            "Salary (LPA)": p.salary || '-',
-            "Placement Date": dateStr,
-            "Status": p.status || 'Placed'
-        };
-    });
-
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Placements");
-    
-    const timestamp = new Date().toISOString().split('T')[0];
-    XLSX.writeFile(workbook, `Placements_Export_${timestamp}.xlsx`);
 }

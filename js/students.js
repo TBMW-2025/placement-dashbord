@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('excelModal').classList.remove('active');
     });
     document.getElementById('excelForm').addEventListener('submit', handleExcelUpload);
-    document.getElementById('exportExcelBtn').addEventListener('click', handleExportExcel);
 });
 
 async function loadStudents() {
@@ -28,7 +27,7 @@ async function loadStudents() {
     try {
         const { data, error } = await window.apiService.fetchAll('students');
         if (error) throw error;
-        
+
         allStudents = data || [];
         renderTable(allStudents);
     } catch (err) {
@@ -51,7 +50,7 @@ function renderTable(data) {
         // Check if placed from external list or logic? The schema doesn't have placed_or_not
         // Let's use a placeholder 'Pending' or rely on some join later
         const placedBadge = '<span style="color:var(--text-secondary)">Pending</span>';
-            
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td style="color:var(--text-secondary);">${srNo}</td>
@@ -73,8 +72,8 @@ function renderTable(data) {
 
 function handleSearch(e) {
     const q = e.target.value.toLowerCase();
-    const filtered = allStudents.filter(s => 
-        s.student_name.toLowerCase().includes(q) || 
+    const filtered = allStudents.filter(s =>
+        s.student_name.toLowerCase().includes(q) ||
         s.enrollment_number.toLowerCase().includes(q)
     );
     renderTable(filtered);
@@ -121,7 +120,7 @@ async function handleSaveStudent(e) {
 
     const id = document.getElementById('studentId').value;
     const fileInput = document.getElementById('resume_file');
-    
+
     let resumeUrlStr = null;
 
     try {
@@ -206,11 +205,11 @@ async function handleExcelUpload(e) {
             try {
                 const data = new Uint8Array(e.target.result);
                 const workbook = XLSX.read(data, { type: 'array' });
-                
+
                 // Get first sheet
                 const firstSheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[firstSheetName];
-                
+
                 // Convert to JSON
                 const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
@@ -231,7 +230,7 @@ async function handleExcelUpload(e) {
                 alert("Excel data successfully imported!");
                 document.getElementById('excelModal').classList.remove('active');
                 await loadStudents();
-                
+
             } catch (err) {
                 alert("Processing Error: " + err.message);
             } finally {
@@ -246,28 +245,4 @@ async function handleExcelUpload(e) {
         btn.textContent = originalText;
         btn.disabled = false;
     }
-}
-
-function handleExportExcel() {
-    if (allStudents.length === 0) {
-        alert("No students to export!");
-        return;
-    }
-    
-    // Map data to standard JSON format for export
-    const exportData = allStudents.map(s => ({
-        "Student Name": s.student_name || '',
-        "Enrollment Number": s.enrollment_number || '',
-        "Email": s.email || '',
-        "Mobile": s.mobile || '',
-        "Programme": s.programme || '',
-        "Higher Education": s.higher_education ? 'Yes' : 'No'
-    }));
-
-    const worksheet = XLSX.utils.json_to_sheet(exportData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
-    
-    const timestamp = new Date().toISOString().split('T')[0];
-    XLSX.writeFile(workbook, `Students_Export_${timestamp}.xlsx`);
 }

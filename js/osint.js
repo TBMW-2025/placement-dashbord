@@ -4,20 +4,15 @@ const visitModal = document.getElementById('visitModal');
 const openAddModalBtn = document.getElementById('openAddModalBtn');
 const closeModalBtn = document.getElementById('closeModalBtn');
 const visitForm = document.getElementById('visitForm');
-const openExcelModalBtn = document.getElementById('openExcelModalBtn');
-const closeExcelModalBtn = document.getElementById('closeExcelModalBtn');
-const excelModal = document.getElementById('excelModal');
-const excelForm = document.getElementById('excelForm');
-const exportExcelBtn = document.getElementById('exportExcelBtn');
 let fieldVisitsData = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchFieldVisits();
-    
-    if(searchInput) {
+
+    if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
-            const filtered = fieldVisitsData.filter(v => 
+            const filtered = fieldVisitsData.filter(v =>
                 (v.location && v.location.toLowerCase().includes(term)) ||
                 (v.purpose && v.purpose.toLowerCase().includes(term))
             );
@@ -25,19 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if(openAddModalBtn) openAddModalBtn.addEventListener('click', () => openModal());
-    if(closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-    if(visitForm) visitForm.addEventListener('submit', handleFormSubmit);
-
-    if(openExcelModalBtn) openExcelModalBtn.addEventListener('click', () => {
-        if(excelForm) excelForm.reset();
-        if(excelModal) excelModal.classList.add('active');
-    });
-    if(closeExcelModalBtn) closeExcelModalBtn.addEventListener('click', () => {
-        if(excelModal) excelModal.classList.remove('active');
-    });
-    if(excelForm) excelForm.addEventListener('submit', handleExcelUpload);
-    if(exportExcelBtn) exportExcelBtn.addEventListener('click', handleExportExcel);
+    if (openAddModalBtn) openAddModalBtn.addEventListener('click', () => openModal());
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    if (visitForm) visitForm.addEventListener('submit', handleFormSubmit);
 });
 
 async function fetchFieldVisits() {
@@ -58,14 +43,14 @@ async function fetchFieldVisits() {
         renderTable(fieldVisitsData);
     } catch (error) {
         console.error('Error fetching field visits:', error);
-        if(fieldVisitsBody) fieldVisitsBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--accent-red)">Failed to load data</td></tr>`;
+        if (fieldVisitsBody) fieldVisitsBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--accent-red)">Failed to load data</td></tr>`;
     }
 }
 
 function renderTable(data) {
-    if(!fieldVisitsBody) return;
+    if (!fieldVisitsBody) return;
     fieldVisitsBody.innerHTML = '';
-    
+
     if (data.length === 0) {
         fieldVisitsBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-secondary)">No field visits found</td></tr>`;
         return;
@@ -91,7 +76,7 @@ function renderTable(data) {
 function openModal(visit = null) {
     const isEdit = visit !== null;
     document.getElementById('modalTitle').textContent = isEdit ? 'Edit Visit' : 'Add Visit';
-    
+
     if (isEdit) {
         document.getElementById('visitId').value = visit.id;
         document.getElementById('location').value = visit.location || '';
@@ -102,7 +87,7 @@ function openModal(visit = null) {
         visitForm.reset();
         document.getElementById('visitId').value = '';
     }
-    
+
     visitModal.classList.add('active');
 }
 
@@ -113,10 +98,10 @@ function closeModal() {
 
 async function handleFormSubmit(e) {
     e.preventDefault();
-    
+
     const visitId = document.getElementById('visitId').value;
     const isEdit = !!visitId;
-    
+
     const visitData = {
         location: document.getElementById('location').value,
         visit_date: document.getElementById('visit_date').value,
@@ -156,8 +141,8 @@ async function handleFormSubmit(e) {
 
 async function deleteVisit(id) {
     if (security.localBypass) {
-         alert("Demo Mode: Data cannot be deleted.");
-         return;
+        alert("Demo Mode: Data cannot be deleted.");
+        return;
     }
 
     if (!confirm('Are you sure you want to delete this visit?')) return;
@@ -174,16 +159,4 @@ async function deleteVisit(id) {
         console.error('Error deleting visit:', error);
         alert('Failed to delete field visit.');
     }
-}
-
-async function handleExcelUpload(e) {
-    e.preventDefault();
-    alert("OSINT Database schema is not yet deployed. Import will be available soon!");
-    const btn = document.getElementById('uploadExcelBtn');
-    btn.innerHTML = 'Parse and Import';
-    btn.disabled = false;
-}
-
-function handleExportExcel() {
-    alert("OSINT Database schema is not yet deployed. Export will be available soon!");
 }

@@ -1,71 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Internships - Placement Monitor</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 </head>
+
 <body>
     <!-- Sidebar -->
     <nav class="sidebar">
         <a href="dashboard.html" class="sidebar-logo">
-            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3d/Rashtriya_Raksha_University_Logo.png/220px-Rashtriya_Raksha_University_Logo.png" alt="RRU Logo" style="width: 100%; border-radius: 5px;">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3d/Rashtriya_Raksha_University_Logo.png/220px-Rashtriya_Raksha_University_Logo.png"
+                alt="RRU Logo" style="width: 100%; border-radius: 5px;">
         </a>
         <ul class="nav-links">
             <li>
                 <a href="dashboard.html">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828791.png" class="icon" alt="Dashboard" style="filter: invert(1);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828791.png" class="icon" alt="Dashboard"
+                        style="filter: invert(1);">
                     Dashboard
                 </a>
             </li>
             <li>
                 <a href="students.html">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3331/3331804.png" class="icon" alt="Students" style="filter: invert(1);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3331/3331804.png" class="icon" alt="Students"
+                        style="filter: invert(1);">
                     Students
                 </a>
             </li>
             <li>
                 <a href="companies.html">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2635/2635467.png" class="icon" alt="Companies" style="filter: invert(1);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2635/2635467.png" class="icon" alt="Companies"
+                        style="filter: invert(1);">
                     Companies
                 </a>
             </li>
             <li>
                 <a href="internships.html" class="active">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3273/3273413.png" class="icon" alt="Internships" style="filter: invert(1);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3273/3273413.png" class="icon" alt="Internships"
+                        style="filter: invert(1);">
                     Internships
                 </a>
             </li>
             <li>
                 <a href="field_visits.html">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" class="icon" alt="Field Visits" style="filter: invert(1);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" class="icon" alt="Field Visits"
+                        style="filter: invert(1);">
                     Field Visits
                 </a>
             </li>
             <li>
                 <a href="placements.html">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1006/1006657.png" class="icon" alt="Placements" style="filter: invert(1);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1006/1006657.png" class="icon" alt="Placements"
+                        style="filter: invert(1);">
                     Placements
                 </a>
             </li>
             <li>
                 <a href="osint.html">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3003/3003189.png" class="icon" alt="OSINT" style="filter: invert(1);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3003/3003189.png" class="icon" alt="OSINT"
+                        style="filter: invert(1);">
                     External Jobs<br>(OSINT)
                 </a>
             </li>
             <li>
                 <a href="reports.html">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3592/3592881.png" class="icon" alt="Reports" style="filter: invert(1);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3592/3592881.png" class="icon" alt="Reports"
+                        style="filter: invert(1);">
                     Reports
                 </a>
             </li>
             <li style="margin-top: auto;">
                 <a href="settings.html" style="margin-bottom: 2rem;">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="icon" alt="Settings" style="filter: invert(1);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="icon" alt="Settings"
+                        style="filter: invert(1);">
                     <div class="avatar" style="width: 25px; height: 25px; font-size: 0.75rem; margin-top: 5px;">A</div>
                     admin
                 </a>
@@ -85,14 +96,21 @@
             </div>
             <div class="topvar-actions">
                 <div class="topvar-search">
-                    <input type="text" placeholder="Search for anything..." style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); width: 400px; padding: 0.75rem 1rem;">
+                    <input type="text" placeholder="Search for anything..."
+                        style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); width: 400px; padding: 0.75rem 1rem;">
                 </div>
                 <!-- Bell Icon -->
-                <div style="position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; border-radius: 50%; background: rgba(255,255,255,0.05);">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3602/3602145.png" style="width: 20px; filter: invert(0.8) sepia(1) hue-rotate(5deg) saturate(3);" alt="Notifications">
-                    <div style="position: absolute; top: -5px; right: -5px; background: #f97316; color: white; border-radius: 50%; width: 16px; height: 16px; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                <div
+                    style="position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; border-radius: 50%; background: rgba(255,255,255,0.05);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3602/3602145.png"
+                        style="width: 20px; filter: invert(0.8) sepia(1) hue-rotate(5deg) saturate(3);"
+                        alt="Notifications">
+                    <div
+                        style="position: absolute; top: -5px; right: -5px; background: #f97316; color: white; border-radius: 50%; width: 16px; height: 16px; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                        1</div>
                 </div>
-                <button class="btn btn-secondary" id="logoutBtn" style="margin-left: 1rem; border:none; background:transparent;">Logout</button>
+                <button class="btn btn-secondary" id="logoutBtn"
+                    style="margin-left: 1rem; border:none; background:transparent;">Logout</button>
             </div>
         </header>
 
@@ -102,17 +120,20 @@
                 <h1 id="pageTitle">Internships</h1>
                 <div style="display: flex; gap: 1rem;">
                     <div class="topvar-search" style="margin-right: -0.5rem;">
-                        <input type="text" id="searchInput" placeholder="Search internships..." style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); width: 200px; padding: 0.5rem 1rem; border-radius: 0.5rem;">
+                        <input type="text" id="searchInput" placeholder="Search internships..."
+                            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); width: 200px; padding: 0.5rem 1rem; border-radius: 0.5rem;">
                     </div>
-                    
-                    <button class="btn btn-secondary" id="openExcelModalBtn">
-                        📤 Import Excel
+
+                    <button class="btn"
+                        style="background: transparent; border: 1px solid var(--accent-green); color: var(--accent-green);">
+                        📄 Import Excel
                     </button>
-                    
-                    <button class="btn btn-secondary" id="exportExcelBtn">
+
+                    <button class="btn"
+                        style="background: transparent; border: 1px solid var(--text-secondary); color: var(--text-secondary);">
                         ⬇️ Export to Excel
                     </button>
-                    
+
                     <button class="btn" style="background: #f97316; color: white; border: none;" id="openAddModalBtn">
                         + Add Internship
                     </button>
@@ -136,12 +157,14 @@
                         </tr>
                     </thead>
                     <tbody id="internshipsBody">
-                        <tr><td colspan="10" class="table-loading"><span class="spinner"></span></td></tr>
+                        <tr>
+                            <td colspan="10" class="table-loading"><span class="spinner"></span></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        
+
         <!-- Footer -->
         <footer class="main-footer">
             <div class="footer-section">
@@ -202,28 +225,9 @@
         </div>
     </div>
 
-    <!-- Excel Import Modal -->
-    <div class="modal" id="excelModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Import Internships (Excel)</h3>
-                <button class="close-btn" id="closeExcelModalBtn">&times;</button>
-            </div>
-            <form id="excelForm">
-                <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.875rem;">
-                    Upload an .xlsx file. Expected columns: <br/><b>student_name, company_name, role, duration, type_of_organization</b>.
-                </p>
-                <div class="form-group">
-                    <label>Upload .xlsx file</label>
-                    <input type="file" id="excel_file" accept=".xlsx,.xls" required>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;" id="uploadExcelBtn">Parse and Import</button>
-            </form>
-        </div>
-    </div>
-
     <script src="js/supabaseClient.js"></script>
     <script src="js/security.js"></script>
     <script src="js/internships.js"></script>
 </body>
+
 </html>
