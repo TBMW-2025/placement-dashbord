@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('excelModal').classList.remove('active');
     });
     document.getElementById('excelForm').addEventListener('submit', handleExcelUpload);
+    document.getElementById('exportExcelBtn').addEventListener('click', handleExportExcel);
 });
 
 async function loadStudents() {
@@ -245,4 +246,28 @@ async function handleExcelUpload(e) {
         btn.textContent = originalText;
         btn.disabled = false;
     }
+}
+
+function handleExportExcel() {
+    if (allStudents.length === 0) {
+        alert("No students to export!");
+        return;
+    }
+    
+    // Map data to standard JSON format for export
+    const exportData = allStudents.map(s => ({
+        "Student Name": s.student_name || '',
+        "Enrollment Number": s.enrollment_number || '',
+        "Email": s.email || '',
+        "Mobile": s.mobile || '',
+        "Programme": s.programme || '',
+        "Higher Education": s.higher_education ? 'Yes' : 'No'
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
+    
+    const timestamp = new Date().toISOString().split('T')[0];
+    XLSX.writeFile(workbook, `Students_Export_${timestamp}.xlsx`);
 }
