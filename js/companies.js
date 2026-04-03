@@ -30,20 +30,22 @@ function renderTable(data) {
     tbody.innerHTML = '';
 
     if (data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No companies found.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No companies found.</td></tr>';
         return;
     }
 
-    data.forEach(item => {
+    data.forEach((company, i) => {
+        const srNo = i + 1;
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td style="font-weight:600;">${item.company_name}</td>
-            <td>${item.role_offered || '-'}</td>
-            <td>${item.contact_person || '-'}</td>
-            <td>${item.contact_email || '-'}</td>
+            <td style="color:var(--text-secondary);">${srNo}</td>
+            <td style="font-weight:500;">${company.company_name}</td>
+            <td style="color:var(--text-secondary);">${company.role_offered || '-'}</td>
+            <td style="color:var(--text-secondary);">${company.contact_person || '-'}</td>
+            <td style="color:var(--text-secondary);">${company.contact_email || '-'}</td>
             <td>
-                <button class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem" onclick='editCompany(${JSON.stringify(item).replace(/'/g, "&apos;")})'>Edit</button>
-                <button class="btn btn-danger" style="padding:0.25rem 0.5rem; font-size:0.75rem" onclick="deleteCompany('${item.id}')">Delete</button>
+                <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="Edit" style="width:16px; cursor:pointer; filter:invert(0.5); margin-right:8px;" onclick='editCompany(${JSON.stringify(company).replace(/'/g, "&apos;")})'>
+                <img src="https://cdn-icons-png.flaticon.com/512/3096/3096673.png" alt="Delete" style="width:16px; cursor:pointer; filter:invert(0.5);" onclick="deleteCompany('${company.id}')">
             </td>
         `;
         tbody.appendChild(tr);
