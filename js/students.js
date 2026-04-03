@@ -45,23 +45,25 @@ function renderTable(data) {
         return;
     }
 
-    data.forEach(student => {
-        const resumeLink = student.resume_url 
-            ? `<a href="${student.resume_url}" target="_blank" style="color:var(--accent-blue); text-decoration:underline;">View</a>` 
-            : `<span style="color:var(--text-secondary)">-</span>`;
+    data.forEach((student, i) => {
+        const srNo = i + 1;
+        // Check if placed from external list or logic? The schema doesn't have placed_or_not
+        // Let's use a placeholder 'Pending' or rely on some join later
+        const placedBadge = '<span style="color:var(--text-secondary)">Pending</span>';
             
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td style="font-weight:600; color:var(--text-secondary)">${student.enrollment_number}</td>
-            <td style="font-weight:500;">${student.student_name}</td>
-            <td>${student.programme || '-'}</td>
-            <td>${student.email || '-'}</td>
-            <td>${student.mobile || '-'}</td>
-            <td>${resumeLink}</td>
-            <td>${student.higher_education ? '<span class="badge" style="background:var(--accent-purple)">Yes</span>' : 'No'}</td>
+            <td style="color:var(--text-secondary);">${srNo}</td>
+            <td style="font-weight:500;">${student.student_name || 'N/A'}</td>
+            <td style="color:var(--text-secondary);">${student.enrollment_number || '-'}</td>
+            <td style="color:var(--text-secondary);">${student.email || '-'}</td>
+            <td style="color:var(--text-secondary);">${student.mobile || '-'}</td>
+            <td style="color:var(--text-secondary);">${student.programme || '-'}</td>
+            <td style="color:var(--text-secondary);">${student.higher_education ? 'Yes' : 'No'}</td>
+            <td>${placedBadge}</td>
             <td>
-                <button class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem" onclick='editStudent(${JSON.stringify(student).replace(/'/g, "&apos;")})'>Edit</button>
-                <button class="btn btn-danger" style="padding:0.25rem 0.5rem; font-size:0.75rem" onclick="deleteStudent('${student.id}')">Delete</button>
+                <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="Edit" style="width:16px; cursor:pointer; filter:invert(0.5); margin-right:8px;" onclick='editStudent(${JSON.stringify(student).replace(/'/g, "&apos;")})'>
+                <img src="https://cdn-icons-png.flaticon.com/512/3096/3096673.png" alt="Delete" style="width:16px; cursor:pointer; filter:invert(0.5);" onclick="deleteStudent('${student.id}')">
             </td>
         `;
         tbody.appendChild(tr);
