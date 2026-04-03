@@ -135,3 +135,73 @@ async function deleteCompany(id) {
         }
     }
 }
+
+async function handleExcelUpload(e) {
+    e.preventDefault();
+    const btn = document.getElementById('uploadExcelBtn');
+    const originalText = btn.textContent;
+    btn.innerHTML = '<span class="spinner"></span> Uploading...';
+    btn.disabled = true;
+
+    const fileInput = document.getElementById('excel_file');
+    if (fileInput.files.length === 0) return;
+
+    try {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = async (e) => {
+            try {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+                const formattedPayload = jsonData.map(row => ({
+                    company_name: row.company_name || row.Company || 'Unknown',
+                    role_offered: row.role_offered || row.Role || null,
+                    contact_person: row.contact_person || row.Contact || null,
+                    contact_email: row.contact_email || row.Email || null
+                }));
+
+                const { error } = await window.apiService.supabase.from('companies').insert(formattedPayload);
+                if (error) throw error;
+
+                alert("Companies successfully imported!");
+                document.getElementById('excelModal').classList.remove('active');
+                await loadCompanies();
+            } catch (err) {
+                alert("Processing Error: " + err.message);
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    } catch (err) {
+        alert("Upload Error: " + err.message);
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }
+}
+
+function handleExportExcel() {
+    if (allCompanies.length === 0) {
+        alert("No companies to export!");
+        return;
+    }
+    
+    const exportData = allCompanies.map(c => ({
+        "Company Name": c.company_name || '',
+        "Role Offered": c.role_offered || '',
+        "Contact Person": c.contact_person || '',
+        "Contact Email": c.contact_email || ''
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Companies");
+    
+    const timestamp = new Date().toISOString().split('T')[0];
+    XLSX.writeFile(workbook, `Companies_Export_${timestamp}.xlsx`);
+}
