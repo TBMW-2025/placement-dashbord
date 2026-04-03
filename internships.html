@@ -99,28 +99,68 @@
         <div class="page-container">
             <div class="page-header" style="margin-bottom: 1rem;">
                 <h1 id="pageTitle">Internships</h1>
-                <button class="btn btn-primary" id="openAddModalBtn">+ Add Internship</button>
+                <div style="display: flex; gap: 1rem;">
+                    <div class="topvar-search" style="margin-right: -0.5rem;">
+                        <input type="text" id="searchInput" placeholder="Search internships..." style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); width: 200px; padding: 0.5rem 1rem; border-radius: 0.5rem;">
+                    </div>
+                    
+                    <button class="btn" style="background: transparent; border: 1px solid var(--accent-green); color: var(--accent-green);">
+                        📄 Import Excel
+                    </button>
+                    
+                    <button class="btn" style="background: transparent; border: 1px solid var(--text-secondary); color: var(--text-secondary);">
+                        ⬇️ Export to Excel
+                    </button>
+                    
+                    <button class="btn" style="background: #f97316; color: white; border: none;" id="openAddModalBtn">
+                        + Add Internship
+                    </button>
+                </div>
             </div>
 
-            <div class="table-container">
+            <div class="table-container" style="border-radius: 0.5rem; margin-top: 0;">
                 <table id="internshipsTable">
                     <thead>
                         <tr>
-                            <th>Student</th>
-                            <th>Enrollment</th>
-                            <th>Company</th>
-                            <th>Role</th>
-                            <th>Duration</th>
-                            <th>Type</th>
-                            <th>Actions</th>
+                            <th>SR. NO.</th>
+                            <th>YEAR<span class="sort-arrow">▼</span></th>
+                            <th>ENROLMENT NO.<span class="sort-arrow">▼</span></th>
+                            <th>PROGRAMME<span class="sort-arrow">▼</span></th>
+                            <th>NAME OF STUDENT<span class="sort-arrow">▼</span></th>
+                            <th>GENDER<span class="sort-arrow">▼</span></th>
+                            <th>INTERNSHIP PLACE<span class="sort-arrow">▼</span></th>
+                            <th>INTERNSHIP PLACE 02<span class="sort-arrow">▼</span></th>
+                            <th>TYPE OF ORGANIZATION</th>
+                            <th>ACTIONS<span class="sort-arrow">▼</span></th>
                         </tr>
                     </thead>
                     <tbody id="internshipsBody">
-                        <tr><td colspan="7" class="table-loading"><span class="spinner"></span></td></tr>
+                        <tr><td colspan="10" class="table-loading"><span class="spinner"></span></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-section">
+                <h4>Rashtriya Raksha University</h4>
+                <p>Puducherry Campus, Pondicherry Institute of Hotel Management & Catering Technology[PIHMCT]</p>
+                <p>Opp To Mahalakshmi Nagar, Murungapakkam, Puducherry – 605004</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: pulse-r24@rru.ac.in</p>
+                <p>Phone: +91 79 XXXXXXXX</p>
+                <p>Office:</p>
+                <p>Web:</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow</h4>
+                <a href="#">Instagram:</a>
+                <a href="#">LinkedIn:</a>
+            </div>
+        </footer>
     </div>
 
     <!-- Modal -->
