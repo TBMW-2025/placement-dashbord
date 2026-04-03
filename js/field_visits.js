@@ -23,6 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (openAddModalBtn) openAddModalBtn.addEventListener('click', () => openModal());
     if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
     if (visitForm) visitForm.addEventListener('submit', handleFormSubmit);
+    if(document.getElementById('openExcelModalBtn')) {
+        document.getElementById('openExcelModalBtn').addEventListener('click', () => {
+            document.getElementById('excelForm').reset();
+            document.getElementById('excelModal').classList.add('active');
+        });
+        document.getElementById('closeExcelModalBtn').addEventListener('click', () => {
+            document.getElementById('excelModal').classList.remove('active');
+        });
+        document.getElementById('excelForm').addEventListener('submit', handleExcelUpload);
+        document.getElementById('exportExcelBtn').addEventListener('click', handleExportExcel);
+    }
+
 });
 
 async function fetchFieldVisits() {
