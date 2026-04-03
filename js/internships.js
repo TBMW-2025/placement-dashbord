@@ -62,18 +62,33 @@ function renderTable(data) {
         return;
     }
 
-    data.forEach(item => {
+    data.forEach((intern, i) => {
+        const srNo = i + 1;
+        
+        // Extract basic data (since gender & place 02 are missing from schema, use placeholders)
+        const yearObj = new Date(intern.created_at).getFullYear() || '-';
+        const enrollment = intern.students?.enrollment_number || '-';
+        const programme = intern.students?.programme || '-';
+        const name = intern.students?.student_name || 'N/A';
+        const gender = '-'; // Placeholder
+        const place1 = intern.companies?.company_name || 'N/A';
+        const place2 = '-'; // Placeholder
+        const typeOrg = intern.type_of_organization || '-';
+        
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td style="font-weight:500;">${item.students?.student_name || 'N/A'}</td>
-            <td style="color:var(--text-secondary);">${item.students?.enrollment_number || '-'}</td>
-            <td>${item.companies?.company_name || 'N/A'}</td>
-            <td>${item.role || '-'}</td>
-            <td>${item.duration || '-'}</td>
-            <td>${item.type_of_organization || '-'}</td>
+            <td style="color:var(--text-secondary);">${srNo}</td>
+            <td style="color:var(--text-secondary);">${yearObj}</td>
+            <td style="color:var(--text-secondary);">${enrollment}</td>
+            <td style="color:var(--text-secondary);">${programme}</td>
+            <td style="font-weight:500;">${name}</td>
+            <td style="color:var(--text-secondary);">${gender}</td>
+            <td style="color:var(--text-secondary);">${place1}</td>
+            <td style="color:var(--text-secondary);">${place2}</td>
+            <td style="color:var(--text-secondary);">${typeOrg}</td>
             <td>
-                <button class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.75rem" onclick='editInternship(${JSON.stringify(item).replace(/'/g, "&apos;")})'>Edit</button>
-                <button class="btn btn-danger" style="padding:0.25rem 0.5rem; font-size:0.75rem" onclick="deleteInternship('${item.id}')">Delete</button>
+                <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="Edit" style="width:16px; cursor:pointer; filter:invert(0.5); margin-right:8px;" onclick='editInternship(${JSON.stringify(intern).replace(/'/g, "&apos;")})'>
+                <img src="https://cdn-icons-png.flaticon.com/512/3096/3096673.png" alt="Delete" style="width:16px; cursor:pointer; filter:invert(0.5);" onclick="deleteInternship('${intern.id}')">
             </td>
         `;
         tbody.appendChild(tr);
