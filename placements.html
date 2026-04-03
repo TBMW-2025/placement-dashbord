@@ -8,60 +8,154 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+    <!-- Sidebar -->
     <nav class="sidebar">
-        <div class="sidebar-header">
-            <h2>📊 Placement Monitor</h2>
-        </div>
+        <a href="dashboard.html" class="sidebar-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3d/Rashtriya_Raksha_University_Logo.png/220px-Rashtriya_Raksha_University_Logo.png" alt="RRU Logo" style="width: 100%;">
+        </a>
         <ul class="nav-links">
-            <li><a href="dashboard.html">🏠 Dashboard</a></li>
-            <li><a href="students.html">🎓 Students</a></li>
-            <li><a href="companies.html">🏢 Companies</a></li>
-            <li><a href="internships.html">💼 Internships</a></li>
-            <li><a href="placements.html" class="active">🚀 Placements</a></li>
-            <li><a href="reports.html">📈 Reports</a></li>
-            <li><a href="settings.html">⚙️ Settings</a></li>
+            <li>
+                <a href="dashboard.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828791.png" class="icon" alt="Dashboard">
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="students.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3331/3331804.png" class="icon" alt="Students">
+                    Students
+                </a>
+            </li>
+            <li>
+                <a href="companies.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2635/2635467.png" class="icon" alt="Companies">
+                    Companies
+                </a>
+            </li>
+            <li>
+                <a href="internships.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3273/3273413.png" class="icon" alt="Internships">
+                    Internships
+                </a>
+            </li>
+            <li>
+                <a href="field_visits.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2838/2838912.png" class="icon" alt="Field Visits">
+                    Field Visits
+                </a>
+            </li>
+            <li>
+                <a href="placements.html" class="active">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1006/1006657.png" class="icon" alt="Placements">
+                    Placements
+                </a>
+            </li>
+            <li>
+                <a href="osint.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3003/3003189.png" class="icon" alt="OSINT">
+                    External Jobs<br>(OSINT)
+                </a>
+            </li>
+            <li>
+                <a href="reports.html">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3592/3592881.png" class="icon" alt="Reports">
+                    Reports
+                </a>
+            </li>
+            <li style="margin-top: auto;">
+                <a href="settings.html" style="margin-bottom: 2rem;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="icon" alt="Settings">
+                    <div class="avatar" style="width: 25px; height: 25px; font-size: 0.75rem; margin-top: 5px;">A</div>
+                    admin
+                </a>
+            </li>
         </ul>
     </nav>
 
     <div class="main-content">
         <header class="topvar">
-            <div class="topvar-search">
-                <input type="text" id="searchInput" placeholder="Search placements...">
+            <div class="topvar-brand">
+                <div class="topvar-brand-titles">
+                    <h1>Placement Monitor Dashboard</h1>
+                    <p>Future Leaders and Security Intelligence</p>
+                </div>
             </div>
             <div class="topvar-actions">
-                <div class="user-profile">
-                    <div class="avatar">A</div>
-                    <span style="font-weight: 500;">Admin User</span>
+                <div class="topvar-search">
+                    <input type="text" placeholder="Search for anything..." style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); width: 400px; padding: 0.75rem 1rem;">
                 </div>
-                <button class="btn btn-secondary" id="logoutBtn">Logout</button>
+                <!-- Bell Icon -->
+                <div style="position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; height: 40px; width: 40px; border-radius: 50%; background: rgba(255,255,255,0.05);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3602/3602145.png" style="width: 20px; filter: invert(0.8) sepia(1) hue-rotate(5deg) saturate(3);" alt="Notifications">
+                    <div style="position: absolute; top: -5px; right: -5px; background: #f97316; color: white; border-radius: 50%; width: 16px; height: 16px; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; font-weight: bold;">1</div>
+                </div>
+                <button class="btn btn-secondary" id="logoutBtn" style="margin-left: 1rem; border:none; background:transparent;">Logout</button>
             </div>
         </header>
 
         <div class="page-container">
-            <div class="page-header">
-                <h1>Placements Module</h1>
-                <button class="btn btn-primary" id="openAddModalBtn">+ Record Placement</button>
+            <div class="page-header" style="margin-bottom: 1rem;">
+                <h1 id="pageTitle">Placements</h1>
+                <div style="display: flex; gap: 1rem;">
+                    <div class="topvar-search" style="margin-right: -0.5rem;">
+                        <input type="text" id="searchInput" placeholder="Search placements..." style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); width: 200px; padding: 0.5rem 1rem; border-radius: 0.5rem;">
+                    </div>
+                    
+                    <button class="btn" style="background: transparent; border: 1px solid var(--accent-green); color: var(--accent-green);">
+                        📄 Import Excel
+                    </button>
+                    
+                    <button class="btn" style="background: transparent; border: 1px solid var(--text-secondary); color: var(--text-secondary);">
+                        ⬇️ Export to Excel
+                    </button>
+                    
+                    <button class="btn" style="background: #f97316; color: white; border: none;" id="openAddModalBtn">
+                        + Record Placement
+                    </button>
+                </div>
             </div>
 
-            <div class="table-container">
+            <div class="table-container" style="border-radius: 0.5rem; margin-top: 0;">
                 <table id="placementsTable">
                     <thead>
                         <tr>
-                            <th>Student</th>
-                            <th>Company</th>
-                            <th>Role</th>
-                            <th>Package (LPA)</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>SR. NO.</th>
+                            <th>STUDENT NAME<span class="sort-arrow">▼</span></th>
+                            <th>COMPANY<span class="sort-arrow">▼</span></th>
+                            <th>ROLE<span class="sort-arrow">▼</span></th>
+                            <th>PACKAGE (LPA)<span class="sort-arrow">▼</span></th>
+                            <th>DATE<span class="sort-arrow">▼</span></th>
+                            <th>STATUS<span class="sort-arrow">▼</span></th>
+                            <th>ACTIONS<span class="sort-arrow">▼</span></th>
                         </tr>
                     </thead>
                     <tbody id="placementsBody">
-                        <tr><td colspan="7" class="table-loading"><span class="spinner"></span></td></tr>
+                        <tr><td colspan="8" class="table-loading"><span class="spinner"></span></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
+        
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-section">
+                <h4>Rashtriya Raksha University</h4>
+                <p>Puducherry Campus, Pondicherry Institute of Hotel Management & Catering Technology[PIHMCT]</p>
+                <p>Opp To Mahalakshmi Nagar, Murungapakkam, Puducherry – 605004</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: pulse-r24@rru.ac.in</p>
+                <p>Phone: +91 79 XXXXXXXX</p>
+                <p>Office:</p>
+                <p>Web:</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow</h4>
+                <a href="#">Instagram:</a>
+                <a href="#">LinkedIn:</a>
+            </div>
+        </footer>
     </div>
 
     <!-- Modal -->
