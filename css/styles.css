@@ -122,16 +122,16 @@ body {
 
 /* Main Layout */
 .sidebar {
-    width: 100px;
-    background: #09090b;
-    border-right: 1px solid var(--border-color);
+    width: 90px;
+    background: #000000;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
     height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 0;
+    padding: 2rem 0;
     z-index: 100;
     align-items: center;
 }
@@ -139,17 +139,24 @@ body {
 .sidebar-logo {
     margin-bottom: 2rem;
     width: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar-logo img {
+    width: 100%;
+    /* No border radius or background needed for transparent logo */
 }
 
 .nav-links {
     list-style: none;
     flex-grow: 1;
     width: 100%;
+    padding: 0 0.5rem;
 }
 
 .nav-links li {
-    margin-bottom: 0.25rem;
-    padding: 0 0.5rem;
+    margin-bottom: 0.5rem;
     width: 100%;
 }
 
@@ -158,34 +165,37 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
-    padding: 0.75rem 0;
-    color: var(--text-secondary);
+    gap: 0.5rem;
+    padding: 0.8rem 0;
+    color: #ffffff;
     text-decoration: none;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     transition: all 0.2s ease;
     font-size: 0.65rem;
-    font-weight: 600;
+    font-weight: 500;
     text-align: center;
+    line-height: 1.2;
 }
 
 .nav-links img.icon {
-    width: 20px;
-    opacity: 0.6;
-}
-
-.nav-links a:hover, .nav-links a.active {
-    background: #18181b;
-    color: var(--text-primary);
-    border: 1px solid #27272a;
-}
-
-.nav-links a:hover img.icon, .nav-links a.active img.icon {
+    width: 22px;
+    height: 22px;
     opacity: 1;
+    object-fit: contain;
+}
+
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-links a.active {
+    background: #27272a;
+    color: #ffffff;
+    border: none;
 }
 
 .main-content {
-    margin-left: 100px;
+    margin-left: 90px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
